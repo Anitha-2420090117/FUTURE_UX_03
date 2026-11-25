@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClientLoop | CRM Dashboard UI Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <aside>
+    <div class="brand"><i>∞</i> ClientLoop</div>
+    <nav id="nav">
+      <a href="#overview" data-v="overview">📊 Overview</a>
+      <a href="#pipeline" data-v="pipeline">🧩 Pipeline</a>
+      <a href="#clients" data-v="clients">👥 Clients</a>
+      <a href="#tasks" data-v="tasks">✅ Tasks <span class="badge">3</span></a>
+      <div class="nav-label">Workspace</div>
+      <a href="#" onclick="return false">📈 Reports</a>
+      <a href="#" onclick="return false">⚙️ Settings</a>
+    </nav>
+    <div class="me"><div class="av" style="background:#6d5ef5">PS</div><div>Priya S.<small>Account Lead</small></div></div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <div><h1 id="title">Overview</h1><div class="sub" id="subtitle">Sunday, 25 October 2026</div></div>
+      <div class="search">🔍 Search clients, deals…</div>
+      <button class="btn">+ Add lead</button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="view" id="v-overview">
+      <div class="kpis">
+        <div class="panel kpi"><small>Open pipeline value</small><b>₹18.6L</b><span class="delta up">▲ 12% vs last month</span></div>
+        <div class="panel kpi"><small>New leads (30d)</small><b>34</b><span class="delta up">▲ 8%</span></div>
+        <div class="panel kpi"><small>Win rate</small><b>38%</b><span class="delta down">▼ 3 pts</span></div>
+        <div class="panel kpi"><small>Follow-ups due today</small><b>5</b><span class="delta down">2 overdue</span></div>
+      </div>
+      <div class="two">
+        <div class="panel"><div class="head"><h3>Revenue won (₹ lakh)</h3><span class="pill p-onhold">Last 6 months</span></div>
+          <div class="bars" id="bars"></div></div>
+        <div class="panel funnel"><div class="head"><h3>Lead funnel</h3></div>
+          <div class="f"><label>New</label><div class="track"><i style="width:100%"></i></div><b>34</b></div>
+          <div class="f"><label>Contacted</label><div class="track"><i style="width:72%"></i></div><b>24</b></div>
+          <div class="f"><label>Proposal</label><div class="track"><i style="width:44%"></i></div><b>15</b></div>
+          <div class="f"><label>Won</label><div class="track"><i style="width:38%"></i></div><b>13</b></div>
+        </div>
+      </div>
+      <div class="two">
+        <div class="panel list"><div class="head"><h3>Needs attention</h3><a class="link" href="#tasks" style="color:var(--brand);font-weight:700">View tasks →</a></div>
+          <div class="item"><span class="pill p-risk">Overdue</span><div class="t"><b>Send revised proposal: Lumina Foods</b><small>Was due Fri 23 Oct</small></div></div>
+          <div class="item"><span class="pill p-risk">Overdue</span><div class="t"><b>Follow up on invoice: Kestrel Logistics</b><small>Was due Sat 24 Oct</small></div></div>
+          <div class="item"><span class="pill p-contacted">Today</span><div class="t"><b>Discovery call: Orbit Fitness</b><small>4:00 PM · Google Meet</small></div></div>
+          <div class="item"><span class="pill p-contacted">Today</span><div class="t"><b>Renewal check-in: Bluepeak Realty</b><small>Contract ends 15 Nov</small></div></div>
+        </div>
+        <div class="panel list"><div class="head"><h3>Recent activity</h3></div>
+          <div class="item"><div class="av" style="background:#16a37a">B</div><div class="t"><b>Bluepeak Realty</b><small>Moved to Won · ₹4.2L</small></div></div>
+          <div class="item"><div class="av" style="background:#2b7fe0">O</div><div class="t"><b>Orbit Fitness</b><small>New lead from website form</small></div></div>
+          <div class="item"><div class="av" style="background:#e8920c">L</div><div class="t"><b>Lumina Foods</b><small>Proposal opened 3 times</small></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIPELINE -->
+    <div class="view" id="v-pipeline">
+      <div class="filters"><span class="chip on">All owners</span><span class="chip">Mine</span><span class="chip">This month</span><span class="chip">Value &gt; ₹2L</span>
+        <span style="margin-left:auto;color:var(--muted);font-size:.82rem">💡 Drag a card to change its stage</span></div>
+      <div class="board" id="board"></div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div class="view" id="v-clients">
+      <div class="filters"><span class="chip on">All (8)</span><span class="chip">Active</span><span class="chip">At risk</span><span class="chip">On hold</span>
+        <span style="margin-left:auto" class="chip">⇅ Sort: Last contact</span></div>
+      <div class="panel" style="padding:6px 8px">
+        <table>
+          <thead><tr><th>Client</th><th>Status</th><th>Health</th><th>Value</th><th>Owner</th><th>Last contact</th></tr></thead>
+          <tbody id="clientRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="view" id="v-profile">
+      <p style="margin-bottom:10px"><a href="#clients" style="color:var(--brand);font-weight:700">← All clients</a></p>
+      <div class="profile-head">
+        <div class="av" style="background:#e8920c">LF</div>
+        <div><h2>Lumina Foods</h2><div class="meta">Food &amp; Beverage · Hyderabad · Client since Mar 2026</div>
+          <div style="margin-top:6px"><span class="pill p-risk">At risk</span> <span class="pill p-proposal">Proposal stage</span></div></div>
+        <div class="acts"><button class="btn sec">✉ Email</button><button class="btn sec">📞 Log call</button><button class="btn">+ Task</button></div>
+      </div>
+      <div class="pgrid">
+        <div>
+          <div class="panel kv" style="margin-bottom:16px"><div class="head"><h3>Details</h3></div>
+            <div class="r"><span>Primary contact</span><b>Anil Mehta</b></div>
+            <div class="r"><span>Role</span><b>Marketing Head</b></div>
+            <div class="r"><span>Email</span><b>anil@lumina.example</b></div>
+            <div class="r"><span>Phone</span><b>+91 90000 11122</b></div>
+            <div class="r"><span>Owner</span><b>Priya S.</b></div>
+            <div class="r"><span>Deal value</span><b>₹3.8L</b></div>
+            <div class="r"><span>Source</span><b>Referral</b></div>
+          </div>
+          <div class="panel"><div class="head"><h3>Engagement</h3></div>
+            <div class="kv"><div class="r"><span>Health score</span><b>Low · 1 of 3</b></div><div class="r"><span>Last contact</span><b>9 days ago</b></div><div class="r"><span>Emails opened</span><b>3 of 5</b></div></div>
+            <div class="rem" style="margin-top:12px"><b>Suggested next step</b>Call Anil this week. No reply since the proposal was opened.</div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Deal stage</h3>
+          <div class="stage"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.76rem;margin-bottom:16px"><span>New</span><span>Contacted</span><span style="color:var(--brand);font-weight:700">Proposal</span><span>Won</span></div>
+          <div class="tabs"><span class="on">Activity</span><span>Tasks (2)</span><span>Notes</span><span>Files</span></div>
+          <div class="note-box">📝 Add a note or log an interaction…</div>
+          <div class="tl">
+            <div class="ev"><b>Proposal opened 3 times</b><br><small>Today, 8:12 AM · via email tracking</small></div>
+            <div class="ev"><b>Revised proposal requested</b><br><small>Fri 16 Oct · Call with Anil, 25 min</small></div>
+            <div class="ev"><b>Proposal sent (₹3.8L, 3 months)</b><br><small>Mon 12 Oct · Priya S.</small></div>
+            <div class="ev"><b>Discovery call completed</b><br><small>Tue 6 Oct · Google Meet</small></div>
+            <div class="ev"><b>Lead created from referral</b><br><small>Mon 28 Sep</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASKS -->
+    <div class="view" id="v-tasks">
+      <div class="filters"><span class="chip on">My tasks</span><span class="chip">Team</span><span class="chip">Completed</span>
+        <span style="margin-left:auto" class="btn">+ New task</span></div>
+      <div class="tgrid">
+        <div id="taskGroups"></div>
+        <div>
+          <div class="panel" style="margin-bottom:14px"><div class="head"><h3>Follow-up reminders</h3></div>
+            <div class="rem"><b>Lumina Foods</b>No reply in 9 days. Suggest a call.</div>
+            <div class="rem"><b>Kestrel Logistics</b>Invoice unpaid for 6 days.</div>
+            <div class="rem"><b>Bluepeak Realty</b>Contract renewal in 21 days.</div>
+          </div>
+          <div class="panel"><div class="head"><h3>This week</h3></div>
+            <div class="kv"><div class="r"><span>Tasks due</span><b>11</b></div><div class="r"><span>Completed</span><b>6</b></div><div class="r"><span>Overdue</span><b style="color:var(--red)">2</b></div></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
